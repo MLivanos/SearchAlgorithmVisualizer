@@ -8,11 +8,14 @@ public class RecursiveMazeGenerator : TerrainGenerator
     private void Start()
     {
         Initialize();
-        MakeRecursiveMaze();
-        StartCoroutine(GenerateMap());
+    }
+    protected override void Initialize()
+    {
+        base.Initialize();
+        MakeMaze();
     }
 
-    private void MakeRecursiveMaze()
+    protected override void MakeMaze()
     {
         AddGridLines();
         bool[,] visited = new bool[(int)shape.x,(int)shape.y];
@@ -39,6 +42,7 @@ public class RecursiveMazeGenerator : TerrainGenerator
             }
             neighbors = GetNeighborsRecursiveMaze(currentPosition, visited);
         }
+        base.MakeMaze();
     }
 
     private List<Vector2> GetNeighborsRecursiveMaze(Vector2 currentPosition, bool[,] visited)

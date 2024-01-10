@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TerrainGenerator : MonoBehaviour
+public abstract class TerrainGenerator : MonoBehaviour
 {
     [SerializeField] protected Vector2 shape;
     [SerializeField] protected int[,] terrain;
@@ -15,16 +15,20 @@ public class TerrainGenerator : MonoBehaviour
     protected int freeValue = 0;
     protected int blockedValue = 1;
     
-    protected void Initialize()
+    protected virtual void Initialize()
     {
         terrain = new int[(int)shape.x,(int)shape.y];
         terrainObjects = new GameObject[(int)shape.x,(int)shape.y];
         AddOutline();
         PositionCamera();
+    }
+
+    protected virtual void MakeMaze()
+    {
         StartCoroutine(GenerateMap());
     }
 
-    protected IEnumerator GenerateMap()
+    private IEnumerator GenerateMap()
     {
         float timeBetweenBlocks = mazeInitializationTime / (shape.x*shape.y);
         for (int i=0; i<(int)shape.x; i++)
@@ -58,4 +62,36 @@ public class TerrainGenerator : MonoBehaviour
         }
     }
 
+    public int GetTile(Vector2 position)
+    {
+        return terrain[(int)position.x, (int)position.y];
+    }
+
+    public List<Vector2> GetNeighbors(Vector2 position)
+    {
+        List<Vector2> neighbors = new List<Vector2>();
+        if (canTravelTo(position + Vector2.left))
+        {
+            neighbors.Add(position + Vector2.left);
+        }
+        if (canTravelTo(position + Vector2.right))
+        {
+            neighbors.Add(position + Vector2.right);
+        }
+        if (canTravelTo(position + Vector2.up))
+        {
+            neighbors.Add(position + Vector2.up);
+        }
+        if (canTravelTo(position + Vector2.down))
+        {
+            neighbors.Add(position + Vector2.down);
+        }
+        return neighbors;
+    }
+
+    // Assumes that this is within 1 block of a known travelable position
+    private bool canTravelTo(Vector2 position)
+    {
+        return GetTile(position) != blockedValue;
+    }
 }
