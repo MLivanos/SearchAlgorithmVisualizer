@@ -17,6 +17,7 @@ public class Terrain : MonoBehaviour
     {
         terrain = new int[(int)shape.x,(int)shape.y];
         terrainObjects = new GameObject[(int)shape.x,(int)shape.y];
+        AddOutline();
         MakeRecursiveMaze();
         StartCoroutine(GenerateMap());
     }
@@ -57,6 +58,7 @@ public class Terrain : MonoBehaviour
             for (int j=0; j<(int)shape.y; j++)
             {
                 GameObject newTile = Instantiate(terrainPrefabs[terrain[i,j]]);
+                terrainObjects[i,j] = newTile;
                 newTile.transform.position = new Vector3(i*cellSize, 0, j*cellSize);
                 yield return new WaitForSeconds(0.01f);
             }
@@ -87,16 +89,6 @@ public class Terrain : MonoBehaviour
 
     private void AddGridLines()
     {
-        for (int i = 0; i < shape.x; i++)
-        {
-            terrain[i,0] = blockedValue;
-            terrain[i,(int)shape.y-1] = blockedValue;
-        }
-        for (int j=0; j < shape.y; j++)
-        {
-            terrain[0,j] = blockedValue;
-            terrain[(int)shape.x-1,j] = blockedValue;
-        }
         for (int i = 1; i < (int)shape.x; i++)
         {
             for (int j = 1; j < (int)shape.y / 2; j++)
@@ -110,6 +102,20 @@ public class Terrain : MonoBehaviour
             {
                 terrain[i*2,j] = blockedValue;
             }
+        }
+    }
+
+    private void AddOutline()
+    {
+        for (int i = 0; i < shape.x; i++)
+        {
+            terrain[i,0] = blockedValue;
+            terrain[i,(int)shape.y-1] = blockedValue;
+        }
+        for (int j=0; j < shape.y; j++)
+        {
+            terrain[0,j] = blockedValue;
+            terrain[(int)shape.x-1,j] = blockedValue;
         }
     }
 
