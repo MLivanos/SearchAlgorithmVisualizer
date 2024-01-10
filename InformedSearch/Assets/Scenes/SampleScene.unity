@@ -438,6 +438,7 @@ MonoBehaviour:
   terrainPrefabs:
   - {fileID: 2208863371363518363, guid: 3a38299e02a6246d9a97b00ab086f81c, type: 3}
   - {fileID: 2089337045168712266, guid: daf6ce9ef5f1b4fce978925040e179ed, type: 3}
+  cameraObject: {fileID: 330585543}
 --- !u!4 &1844265701
 Transform:
   m_ObjectHideFlags: 0

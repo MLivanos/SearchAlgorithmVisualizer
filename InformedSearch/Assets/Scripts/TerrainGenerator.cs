@@ -3,11 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Terrain : MonoBehaviour
+public class TerrainGenerator : MonoBehaviour
 {
     [SerializeField] private Vector2 shape;
     [SerializeField] private int[,] terrain;
     [SerializeField] private GameObject[] terrainPrefabs;
+    [SerializeField] private GameObject cameraObject;
     private GameObject[,] terrainObjects;
     private float cellSize = 1.0f;
     private int freeValue = 0;
@@ -19,6 +20,7 @@ public class Terrain : MonoBehaviour
         terrainObjects = new GameObject[(int)shape.x,(int)shape.y];
         AddOutline();
         MakeRecursiveMaze();
+        PositionCamera();
         StartCoroutine(GenerateMap());
     }
 
@@ -63,6 +65,11 @@ public class Terrain : MonoBehaviour
                 yield return new WaitForSeconds(0.01f);
             }
         }
+    }
+
+    private void PositionCamera(float offset=1.2f)
+    {
+        cameraObject.transform.position = new Vector3(shape.x*cellSize / 2, Mathf.Max(shape.x*cellSize, shape.y*cellSize)*offset, shape.y*cellSize / 2);
     }
 
     private List<Vector2> GetNeighborsRecursiveMaze(Vector2 currentPosition, bool[,] visited)
