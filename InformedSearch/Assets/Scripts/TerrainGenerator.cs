@@ -116,7 +116,7 @@ public abstract class TerrainGenerator : MonoBehaviour
 
     public int GetCost(Vector2Int position1, Vector2Int position2)
     {
-        if (Mathf.Abs((position2 - position1).magnitude) > 1)
+        if (Mathf.Abs((position2 - position1).magnitude) > 1.1f)
         {
             return 100000000;
         }

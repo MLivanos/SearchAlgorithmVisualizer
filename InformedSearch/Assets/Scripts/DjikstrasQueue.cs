@@ -11,4 +11,11 @@ public class DjikstrasQueue : Queue
         objectiveCost[position] = objectiveCost[previous[position]] + terrain.GetCost(position, previous[position]);
         InsertionSort(position, objectiveCost[position], objectiveCost);
     }
+
+    public override void Initialize()
+    {
+        objectiveCost[terrain.GetStart()] = 0.0f;
+        previous[terrain.GetStart()] = terrain.GetStart();
+        base.Initialize();
+    }
 }

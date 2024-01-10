@@ -10,9 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6511688752733494897}
   - component: {fileID: 6511688752733494898}
-  - component: {fileID: 6511688752733494899}
   m_Layer: 0
-  m_Name: TerrainGenerator
+  m_Name: RecursiveMaze
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,31 +47,8 @@ MonoBehaviour:
   shape: {x: 31, y: 31}
   startPoint: {x: 5, y: 5}
   goalPoint: {x: 25, y: 25}
-  cameraObject: {fileID: 0}
   terrainPrefabs:
   - {fileID: 2208863371363518363, guid: 3a38299e02a6246d9a97b00ab086f81c, type: 3}
   - {fileID: 2089337045168712266, guid: daf6ce9ef5f1b4fce978925040e179ed, type: 3}
   mazeInitializationTime: 1
   itemFlipTime: 0.5
---- !u!114 &6511688752733494899
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6511688752733494903}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61a30f1b7ee554f5b918b5fea46ddef3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shape: {x: 31, y: 31}
-  startPoint: {x: 5, y: 5}
-  goalPoint: {x: 25, y: 25}
-  cameraObject: {fileID: 0}
-  terrainPrefabs:
-  - {fileID: 2208863371363518363, guid: 3a38299e02a6246d9a97b00ab086f81c, type: 3}
-  - {fileID: 2089337045168712266, guid: daf6ce9ef5f1b4fce978925040e179ed, type: 3}
-  mazeInitializationTime: 1
-  itemFlipTime: 0.5
-  proportionOfBlockedPoints: 0.2

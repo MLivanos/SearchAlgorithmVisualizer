@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
         terrain = terrainObject.GetComponent<TerrainGenerator>();
         solver.SetTerrain(terrain);
         solver.SetQueue(queue);
+        queue.Initialize();
         solver.SetWaitTime(timeBetweenExpansion);
     }
 

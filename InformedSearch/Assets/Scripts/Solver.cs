@@ -51,9 +51,9 @@ public class Solver : MonoBehaviour
         {
             return;
         }
+        queue.AddToHistory(currentPosition, neighbor);
         queue.Add(neighbor);
         explored.Add(neighbor);
-        queue.AddToHistory(currentPosition, neighbor);
     }
 
     public void SetQueue(Queue queue_)

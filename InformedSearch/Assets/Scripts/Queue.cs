@@ -19,6 +19,11 @@ public abstract class Queue : MonoBehaviour
 
     }
 
+    public virtual void Initialize()
+    {
+        frontier = new List<Vector2Int>();
+    }
+
     public Vector2Int Pop()
     {
         if (frontier.Count == 0)
@@ -42,13 +47,13 @@ public abstract class Queue : MonoBehaviour
             {
                 break;
             }
-            if (middleValue >= cost)
+            if (middleValue < cost)
             {
-                low += middle;
+                low = middle + 1;
             }
             else
             {
-                high -= middle;
+                high = middle - 1;
             }
             middle = low + (int)((high-low)/2);
         }
