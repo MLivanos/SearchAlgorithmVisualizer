@@ -11,7 +11,14 @@ public class AStarQueue : Queue
     {
         objectiveCost[position] = objectiveCost[previous[position]] + terrain.GetCost(position, previous[position]);
         finalCost[position] = objectiveCost[position] + Hueristic(position);
-        InsertionSort(position, objectiveCost[position], finalCost);
+        InsertionSort(position, finalCost[position], finalCost);
+    }
+
+    public override void Initialize()
+    {
+        objectiveCost[terrain.GetStart()] = 0.0f;
+        previous[terrain.GetStart()] = terrain.GetStart();
+        base.Initialize();
     }
 
     private float Hueristic(Vector2Int position)
