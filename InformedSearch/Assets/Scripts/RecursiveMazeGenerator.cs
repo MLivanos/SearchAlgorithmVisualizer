@@ -19,19 +19,18 @@ public class RecursiveMazeGenerator : TerrainGenerator
     {
         AddGridLines();
         bool[,] visited = new bool[(int)shape.x,(int)shape.y];
-        Vector2[,] previous = new Vector2[(int)shape.x,(int)shape.y];
+        Vector2Int[,] previous = new Vector2Int[(int)shape.x,(int)shape.y];
         int xBound = (int)shape.x-2;
         int zBound = (int)shape.y-2;
-        Vector2 initialPosition = new Vector2(1,1);
-        Vector2 currentPosition = new Vector2(1,1);
-        List<Vector2> neighbors = GetNeighborsRecursiveMaze(currentPosition, visited);
-        while (initialPosition != currentPosition || neighbors.Count > 0)
+        Vector2Int currentPosition = startPoint;
+        List<Vector2Int> neighbors = GetNeighborsRecursiveMaze(currentPosition, visited);
+        while (startPoint != currentPosition || neighbors.Count > 0)
         {
             visited[(int)currentPosition.x,(int)currentPosition.y] = true;
             if (neighbors.Count > 0)
             {
-                Vector2 nextPosition = neighbors[Random.Range (0,neighbors.Count)];
-                Vector2 offset = (nextPosition - currentPosition)/2;
+                Vector2Int nextPosition = neighbors[Random.Range (0,neighbors.Count)];
+                Vector2Int offset = (nextPosition - currentPosition)/2;
                 terrain[(int)(currentPosition.x + offset.x),(int)(currentPosition.y + offset.y)] = 0;
                 previous[(int)nextPosition.x,(int)nextPosition.y] = currentPosition;
                 currentPosition = nextPosition;
@@ -45,24 +44,24 @@ public class RecursiveMazeGenerator : TerrainGenerator
         base.MakeMaze();
     }
 
-    private List<Vector2> GetNeighborsRecursiveMaze(Vector2 currentPosition, bool[,] visited)
+    private List<Vector2Int> GetNeighborsRecursiveMaze(Vector2Int currentPosition, bool[,] visited)
     {
-        List<Vector2> neighbors = new List<Vector2>();
+        List<Vector2Int> neighbors = new List<Vector2Int>();
         if (currentPosition.x > 1 && !visited[(int)currentPosition.x-2, (int)currentPosition.y])
         {
-            neighbors.Add(new Vector2(currentPosition.x-2, currentPosition.y));
+            neighbors.Add(new Vector2Int(currentPosition.x-2, currentPosition.y));
         }
         if (currentPosition.x < shape.x-2 && !visited[(int)currentPosition.x+2, (int)currentPosition.y])
         {
-            neighbors.Add(new Vector2(currentPosition.x+2, currentPosition.y));
+            neighbors.Add(new Vector2Int(currentPosition.x+2, currentPosition.y));
         }
         if (currentPosition.y > 1 && !visited[(int)currentPosition.x, (int)currentPosition.y-2])
         {
-            neighbors.Add(new Vector2(currentPosition.x, currentPosition.y-2));
+            neighbors.Add(new Vector2Int(currentPosition.x, currentPosition.y-2));
         }
         if (currentPosition.y < shape.y-2 && !visited[(int)currentPosition.x, (int)currentPosition.y+2])
         {
-            neighbors.Add(new Vector2(currentPosition.x, currentPosition.y+2));
+            neighbors.Add(new Vector2Int(currentPosition.x, currentPosition.y+2));
         }
         return neighbors;
     }
