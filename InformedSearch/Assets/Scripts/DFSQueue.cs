@@ -6,6 +6,6 @@ public class DFSQueue : Queue
 {
     public override void Add(Vector2Int position)
     {
-        frontier.Insert(frontier.Count, position);
+        frontier.Insert(0, position);
     }
 }

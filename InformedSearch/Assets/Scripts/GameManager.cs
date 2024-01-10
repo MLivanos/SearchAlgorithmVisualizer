@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject terrainPrefab;
     [SerializeField] private Queue queue;
+    [SerializeField] private float timeBetweenExpansion;
     private TerrainGenerator terrain;
     private Solver solver;
     private bool isSolving;
@@ -13,11 +14,11 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         solver = gameObject.AddComponent(typeof(Solver)) as Solver;
-        queue = gameObject.AddComponent(typeof(BFSQueue)) as Queue;
         GameObject terrainObject = Instantiate(terrainPrefab);
         terrain = terrainObject.GetComponent<TerrainGenerator>();
         solver.SetTerrain(terrain);
         solver.SetQueue(queue);
+        solver.SetWaitTime(timeBetweenExpansion);
     }
 
     private void Update()

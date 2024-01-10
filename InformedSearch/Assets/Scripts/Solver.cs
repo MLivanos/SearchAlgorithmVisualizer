@@ -6,6 +6,7 @@ public class Solver : MonoBehaviour
 {
     private Color exploredColor = Color.yellow;
     private Color pathColor = Color.green;
+    private float timeBetweenExpansion;
     private Queue queue;
     private TerrainGenerator terrain;
     private HashSet<Vector2Int> explored;
@@ -32,7 +33,7 @@ public class Solver : MonoBehaviour
             {
                 AddNeighbor(currentPosition, neighbor);
             }
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(timeBetweenExpansion);
         }
     }
 
@@ -65,5 +66,10 @@ public class Solver : MonoBehaviour
     public void SetTerrain(TerrainGenerator terrain_)
     {
         terrain = terrain_;
+    }
+
+    public void SetWaitTime(float time)
+    {
+        timeBetweenExpansion = time;
     }
 }
