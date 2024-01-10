@@ -24,6 +24,10 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown("r"))
+        {
+            terrain.ResetMaze();
+        }
         if (terrain.IsCreated() && !isSolving)
         {
             isSolving = true;

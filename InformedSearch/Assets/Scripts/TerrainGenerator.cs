@@ -12,6 +12,7 @@ public abstract class TerrainGenerator : MonoBehaviour
     [SerializeField] protected float mazeInitializationTime;
     [SerializeField] protected float itemFlipTime;
     protected GameObject[,] terrainObjects;
+    protected Color freeSpaceColor;
     protected int[,] terrain;
     protected GameObject cameraObject;
     protected float cellSize = 1.0f;
@@ -21,6 +22,8 @@ public abstract class TerrainGenerator : MonoBehaviour
 
     protected virtual void Initialize()
     {
+        Renderer tileRenderer = terrainPrefabs[freeValue].GetComponent<Renderer>();
+        freeSpaceColor = tileRenderer.sharedMaterial.color;
         terrain = new int[shape.x,shape.y];
         terrainObjects = new GameObject[shape.x,shape.y];
         cameraObject = GameObject.Find("Main Camera");
@@ -37,7 +40,7 @@ public abstract class TerrainGenerator : MonoBehaviour
 
     public void ExploreNode(Vector2Int position, Color color)
     {
-        StartCoroutine(FlipTile(position));
+        //StartCoroutine(FlipTile(position));
         StartCoroutine(ChangePlaceColor(position, color, itemFlipTime));
     }
 
@@ -90,7 +93,7 @@ public abstract class TerrainGenerator : MonoBehaviour
         isCreated = true;
     }
 
-    protected void PositionCamera(float offset=1.2f)
+    protected void PositionCamera(float offset=1.0f)
     {
         cameraObject.transform.position = new Vector3(shape.x*cellSize / 2, Mathf.Max(shape.x*cellSize, shape.y*cellSize)*offset, shape.y*cellSize / 2);
     }
@@ -194,5 +197,21 @@ public abstract class TerrainGenerator : MonoBehaviour
     public bool IsCreated()
     {
         return isCreated;
+    }
+
+    public void ResetMaze()
+    {
+        for(int i=0; i<shape.x; i++)
+        {
+            for(int j=0; j<shape.y; j++)
+            {
+                if (terrain[i,j] == freeValue)
+                {
+                    StartCoroutine(ChangePlaceColor(new Vector2Int(i,j), freeSpaceColor, 0.0f));
+                }
+            }
+        }
+        StartCoroutine(ChangePlaceColor(startPoint, Color.red, 0.0f));
+        StartCoroutine(ChangePlaceColor(goalPoint, Color.blue, 0.0f));
     }
 }
