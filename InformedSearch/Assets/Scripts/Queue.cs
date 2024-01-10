@@ -6,21 +6,26 @@ public abstract class Queue : MonoBehaviour
 {
     protected TerrainGenerator terrain;
     protected List<Vector2Int> frontier;
-    protected Vector2 goalPosition;
+    protected Vector2Int goalPosition;
     protected Dictionary<Vector2Int, Vector2Int> previous = new Dictionary<Vector2Int, Vector2Int>();
 
-    protected virtual void Add(Vector2Int position)
+    private void Start()
+    {
+        frontier = new List<Vector2Int>();
+    }
+
+    public virtual void Add(Vector2Int position)
     {
 
     }
 
-    protected Vector2 Pop()
+    public Vector2Int Pop()
     {
         if (frontier.Count == 0)
         {
-            return new Vector2(-1,-1);
+            return new Vector2Int(-1,-1);
         }
-        Vector2 recentItem = frontier[0];
+        Vector2Int recentItem = frontier[0];
         frontier.RemoveAt(0);
         return recentItem;
     }
@@ -59,4 +64,44 @@ public abstract class Queue : MonoBehaviour
     {
         terrain = terrain_;
     }
+
+    public void AddToHistory(Vector2Int node, Vector2Int successor)
+    {
+        previous[successor] = node;
+    }
+
+    public bool IsEmpty()
+    {
+        return frontier.Count == 0;
+    }
+
+    public void SetTerrain(TerrainGenerator terrain_)
+    {
+        terrain = terrain_;
+    }
+
+    public List<Vector2Int> Backtrack()
+    {
+        List<Vector2Int> pathway = new List<Vector2Int>();
+        Vector2Int currentPoint = goalPosition;
+        while (currentPoint != terrain.GetStart())
+        {
+            pathway.Add(currentPoint);
+            currentPoint = previous[currentPoint];
+        }
+        pathway.Add(terrain.GetStart());
+        pathway.Reverse();
+        return pathway;
+    }
+
+    public void PrintFrontier()
+    {
+        Debug.Log("============");
+        for(int i=0; i<frontier.Count; i++)
+        {
+            Debug.Log(frontier[i]);
+        }
+        Debug.Log("============");
+    }
+
 }

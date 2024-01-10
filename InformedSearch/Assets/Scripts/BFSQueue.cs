@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BFSQueue : Queue
 {
-    protected override void Add(Vector2Int position)
+    public override void Add(Vector2Int position)
     {
         frontier.Add(position);
     }

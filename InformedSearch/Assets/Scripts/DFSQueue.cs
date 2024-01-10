@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DFSQueue : Queue
 {
-    protected override void Add(Vector2Int position)
+    public override void Add(Vector2Int position)
     {
         frontier.Insert(frontier.Count, position);
     }

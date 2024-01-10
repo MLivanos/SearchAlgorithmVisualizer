@@ -8,20 +8,22 @@ public abstract class TerrainGenerator : MonoBehaviour
     [SerializeField] protected Vector2Int shape;
     [SerializeField] protected Vector2Int startPoint;
     [SerializeField] protected Vector2Int goalPoint;
-    [SerializeField] protected GameObject cameraObject;
     [SerializeField] protected GameObject[] terrainPrefabs;
     [SerializeField] protected float mazeInitializationTime;
     [SerializeField] protected float itemFlipTime;
     protected GameObject[,] terrainObjects;
     protected int[,] terrain;
+    protected GameObject cameraObject;
     protected float cellSize = 1.0f;
     protected int freeValue = 0;
     protected int blockedValue = 1;
+    protected bool isCreated;
 
     protected virtual void Initialize()
     {
         terrain = new int[shape.x,shape.y];
         terrainObjects = new GameObject[shape.x,shape.y];
+        cameraObject = GameObject.Find("Main Camera");
         AddOutline();
         PositionCamera();
     }
@@ -85,6 +87,7 @@ public abstract class TerrainGenerator : MonoBehaviour
         }
         StartCoroutine(ChangePlaceColor(new Vector2Int(startPoint.x, startPoint.y), Color.red, 0.0f));
         StartCoroutine(ChangePlaceColor(new Vector2Int(goalPoint.x, goalPoint.y), Color.blue, 0.0f));
+        isCreated = true;
     }
 
     protected void PositionCamera(float offset=1.2f)
@@ -176,5 +179,20 @@ public abstract class TerrainGenerator : MonoBehaviour
     public void SetItemFlipTime(float time)
     {
         itemFlipTime = time;
+    }
+
+    public Vector2Int GetStart()
+    {
+        return startPoint;
+    }
+
+    public Vector2Int GetGoal()
+    {
+        return goalPoint;
+    }
+
+    public bool IsCreated()
+    {
+        return isCreated;
     }
 }
