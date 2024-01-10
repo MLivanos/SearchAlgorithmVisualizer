@@ -9,9 +9,9 @@ public abstract class TerrainGenerator : MonoBehaviour
     [SerializeField] protected Vector2Int startPoint;
     [SerializeField] protected Vector2Int goalPoint;
     [SerializeField] protected GameObject cameraObject;
+    [SerializeField] protected GameObject[] terrainPrefabs;
     [SerializeField] protected float mazeInitializationTime;
     [SerializeField] protected float itemFlipTime;
-    protected GameObject[] terrainPrefabs;
     protected GameObject[,] terrainObjects;
     protected int[,] terrain;
     protected float cellSize = 1.0f;
@@ -56,7 +56,7 @@ public abstract class TerrainGenerator : MonoBehaviour
 
     private IEnumerator GenerateMap()
     {
-        float timeBetweenBlocks = mazeInitializationTime / (shape.x*shape.y);
+        float timeBetweenBlocks = mazeInitializationTime / shape.y;
         for (int i=0; i<shape.x; i++)
         {
             for (int j=0; j<shape.y; j++)
@@ -64,8 +64,8 @@ public abstract class TerrainGenerator : MonoBehaviour
                 GameObject newTile = Instantiate(terrainPrefabs[terrain[i,j]]);
                 terrainObjects[i,j] = newTile;
                 newTile.transform.position = new Vector3(i*cellSize, 0, j*cellSize);
-                yield return new WaitForSeconds(timeBetweenBlocks);
             }
+            yield return new WaitForSeconds(timeBetweenBlocks);
         }
         ChangePlaceColor(terrainObjects[startPoint.x, startPoint.y], Color.red);
         ChangePlaceColor(terrainObjects[goalPoint.x, goalPoint.y], Color.blue);
