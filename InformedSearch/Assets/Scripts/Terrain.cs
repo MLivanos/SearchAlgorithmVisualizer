@@ -8,6 +8,8 @@ public class Terrain : MonoBehaviour
     [SerializeField] private Vector2 shape;
     [SerializeField] private int[,] terrain;
     [SerializeField] private GameObject[,] terrainObjects;
+    [SerializeField] private GameObject freeSpaceObject;
+    [SerializeField] private GameObject barrierObject;
     private float cellSize = 1.0f;
     private int freeValue = 0;
     private int blockedValue = 1;
