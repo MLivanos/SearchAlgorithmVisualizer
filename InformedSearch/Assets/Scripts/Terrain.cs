@@ -7,9 +7,8 @@ public class Terrain : MonoBehaviour
 {
     [SerializeField] private Vector2 shape;
     [SerializeField] private int[,] terrain;
-    [SerializeField] private GameObject[,] terrainObjects;
-    [SerializeField] private GameObject freeSpaceObject;
-    [SerializeField] private GameObject barrierObject;
+    [SerializeField] private GameObject[] terrainPrefabs;
+    private GameObject[,] terrainObjects;
     private float cellSize = 1.0f;
     private int freeValue = 0;
     private int blockedValue = 1;
@@ -19,7 +18,7 @@ public class Terrain : MonoBehaviour
         terrain = new int[(int)shape.x,(int)shape.y];
         terrainObjects = new GameObject[(int)shape.x,(int)shape.y];
         MakeRecursiveMaze();
-        DisplayMap(terrain);
+        GenerateMap();
     }
 
     private void MakeRecursiveMaze()
@@ -51,19 +50,16 @@ public class Terrain : MonoBehaviour
         }
     }
 
-    private void DisplayMap(int[,] floorMapArray)
+    private void GenerateMap()
     {
-        StringBuilder sb = new StringBuilder();
-        for(int i=0; i< floorMapArray.GetLength(1); i++)
+        for (int i=0; i<(int)shape.x; i++)
         {
-            for(int j=0; j<floorMapArray.GetLength(0); j++)
+            for (int j=0; j<(int)shape.y; j++)
             {
-                sb.Append(floorMapArray [i,j]);
-                sb.Append(' ');				   
+                GameObject newTile = Instantiate(terrainPrefabs[terrain[i,j]]);
+                newTile.transform.position = new Vector3(i*cellSize, 0, j*cellSize);
             }
-            sb.AppendLine();
         }
-        Debug.Log(sb.ToString());
     }
 
     private List<Vector2> GetNeighborsRecursiveMaze(Vector2 currentPosition, bool[,] visited)
