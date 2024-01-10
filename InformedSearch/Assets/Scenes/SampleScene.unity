@@ -457,7 +457,7 @@ MonoBehaviour:
   terrainPrefabs:
   - {fileID: 2208863371363518363, guid: 3a38299e02a6246d9a97b00ab086f81c, type: 3}
   - {fileID: 2089337045168712266, guid: daf6ce9ef5f1b4fce978925040e179ed, type: 3}
-  mazeInitializationTime: 0
+  mazeInitializationTime: 1
   itemFlipTime: 0.5
 --- !u!114 &1844265703
 MonoBehaviour:
@@ -478,6 +478,6 @@ MonoBehaviour:
   terrainPrefabs:
   - {fileID: 2208863371363518363, guid: 3a38299e02a6246d9a97b00ab086f81c, type: 3}
   - {fileID: 2089337045168712266, guid: daf6ce9ef5f1b4fce978925040e179ed, type: 3}
-  mazeInitializationTime: 0
+  mazeInitializationTime: 1
   itemFlipTime: 0.5
   proportionOfBlockedPoints: 0.2

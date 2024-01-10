@@ -17,7 +17,7 @@ public abstract class TerrainGenerator : MonoBehaviour
     protected float cellSize = 1.0f;
     protected int freeValue = 0;
     protected int blockedValue = 1;
-    
+
     protected virtual void Initialize()
     {
         terrain = new int[shape.x,shape.y];
@@ -33,24 +33,40 @@ public abstract class TerrainGenerator : MonoBehaviour
         StartCoroutine(GenerateMap());
     }
 
-    public IEnumerator exploreNode(Vector2Int position, Color color)
+    public void ExploreNode(Vector2Int position, Color color)
+    {
+        StartCoroutine(FlipTile(position));
+        StartCoroutine(ChangePlaceColor(position, color, itemFlipTime));
+    }
+
+    public IEnumerator FlipTile(Vector2Int position)
     {
         GameObject tile = terrainObjects[position.x, position.y];
-        float time = 0.0f;
+        float timer = 0.0f;
         float rotationSpeed = 180.0f/itemFlipTime;
-        while (time < itemFlipTime)
+        while (timer < itemFlipTime)
         {
-            time += Time.deltaTime;
+            timer += Time.deltaTime;
             tile.transform.Rotate(Vector3.forward*rotationSpeed*Time.deltaTime);
             yield return null;
         }
         tile.transform.eulerAngles = Vector3.zero;
-        ChangePlaceColor(tile, color);
     }
 
-    private void ChangePlaceColor(GameObject placeObject, Color color)
+    private IEnumerator ChangePlaceColor(Vector2Int position, Color color, float time)
     {
-        Renderer objectRenderer = placeObject.GetComponent<Renderer>();
+        GameObject tile = terrainObjects[position.x, position.y];
+        Renderer objectRenderer = tile.GetComponent<Renderer>();
+        float timer = 0.0f;
+        Color intermediateColor = objectRenderer.material.color;
+        Color initialColor = objectRenderer.material.color;
+        while (timer < time)
+        {
+            timer += Time.deltaTime;
+            intermediateColor += Time.deltaTime/time * (color - initialColor);
+            objectRenderer.material.SetColor("_BaseColor", intermediateColor);
+            yield return null;
+        }
         objectRenderer.material.SetColor("_BaseColor", color);
     }
 
@@ -67,8 +83,8 @@ public abstract class TerrainGenerator : MonoBehaviour
             }
             yield return new WaitForSeconds(timeBetweenBlocks);
         }
-        ChangePlaceColor(terrainObjects[startPoint.x, startPoint.y], Color.red);
-        ChangePlaceColor(terrainObjects[goalPoint.x, goalPoint.y], Color.blue);
+        StartCoroutine(ChangePlaceColor(new Vector2Int(startPoint.x, startPoint.y), Color.red, 0.0f));
+        StartCoroutine(ChangePlaceColor(new Vector2Int(goalPoint.x, goalPoint.y), Color.blue, 0.0f));
     }
 
     protected void PositionCamera(float offset=1.2f)
