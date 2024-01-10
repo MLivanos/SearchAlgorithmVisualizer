@@ -18,7 +18,7 @@ public class Terrain : MonoBehaviour
         terrain = new int[(int)shape.x,(int)shape.y];
         terrainObjects = new GameObject[(int)shape.x,(int)shape.y];
         MakeRecursiveMaze();
-        GenerateMap();
+        StartCoroutine(GenerateMap());
     }
 
     private void MakeRecursiveMaze()
@@ -50,7 +50,7 @@ public class Terrain : MonoBehaviour
         }
     }
 
-    private void GenerateMap()
+    private IEnumerator GenerateMap()
     {
         for (int i=0; i<(int)shape.x; i++)
         {
@@ -58,6 +58,7 @@ public class Terrain : MonoBehaviour
             {
                 GameObject newTile = Instantiate(terrainPrefabs[terrain[i,j]]);
                 newTile.transform.position = new Vector3(i*cellSize, 0, j*cellSize);
+                yield return new WaitForSeconds(0.01f);
             }
         }
     }
