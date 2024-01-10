@@ -9,6 +9,7 @@ public class RecursiveMazeGenerator : TerrainGenerator
     {
         Initialize();
     }
+
     protected override void Initialize()
     {
         base.Initialize();

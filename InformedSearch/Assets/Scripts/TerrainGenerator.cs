@@ -8,11 +8,12 @@ public abstract class TerrainGenerator : MonoBehaviour
     [SerializeField] protected Vector2Int shape;
     [SerializeField] protected Vector2Int startPoint;
     [SerializeField] protected Vector2Int goalPoint;
-    [SerializeField] protected int[,] terrain;
-    [SerializeField] protected GameObject[] terrainPrefabs;
     [SerializeField] protected GameObject cameraObject;
     [SerializeField] protected float mazeInitializationTime;
+    [SerializeField] protected float itemFlipTime;
+    protected GameObject[] terrainPrefabs;
     protected GameObject[,] terrainObjects;
+    protected int[,] terrain;
     protected float cellSize = 1.0f;
     protected int freeValue = 0;
     protected int blockedValue = 1;
@@ -30,6 +31,21 @@ public abstract class TerrainGenerator : MonoBehaviour
         terrain[startPoint.x, startPoint.y] = freeValue;
         terrain[goalPoint.x, goalPoint.y] = freeValue;
         StartCoroutine(GenerateMap());
+    }
+
+    public IEnumerator exploreNode(Vector2Int position, Color color)
+    {
+        GameObject tile = terrainObjects[position.x, position.y];
+        float time = 0.0f;
+        float rotationSpeed = 180.0f/itemFlipTime;
+        while (time < itemFlipTime)
+        {
+            time += Time.deltaTime;
+            tile.transform.Rotate(Vector3.forward*rotationSpeed*Time.deltaTime);
+            yield return null;
+        }
+        tile.transform.eulerAngles = Vector3.zero;
+        ChangePlaceColor(tile, color);
     }
 
     private void ChangePlaceColor(GameObject placeObject, Color color)
@@ -105,5 +121,35 @@ public abstract class TerrainGenerator : MonoBehaviour
     private bool canTravelTo(Vector2Int position)
     {
         return GetTile(position) != blockedValue;
+    }
+
+    public void SetCamera(GameObject camera_)
+    {
+        cameraObject = camera_;
+    }
+
+    public void SetShape(Vector2Int shape_)
+    {
+        shape = shape_;
+    }
+
+    public void SetStartPosition(Vector2Int position)
+    {
+        startPoint = position;
+    }
+
+    public void SetGoalPosition(Vector2Int position)
+    {
+        goalPoint = position;
+    }
+
+    public void SetInitializationTime(float time)
+    {
+        mazeInitializationTime = time;
+    }
+
+    public void SetItemFlipTime(float time)
+    {
+        itemFlipTime = time;
     }
 }

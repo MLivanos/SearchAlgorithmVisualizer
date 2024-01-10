@@ -27,4 +27,9 @@ public class RandomMaze : TerrainGenerator
         base.MakeMaze();
     }
 
+    public void SetBlockedProportion(float proportion)
+    {
+        proportionOfBlockedPoints = proportion;
+    }
+
 }
