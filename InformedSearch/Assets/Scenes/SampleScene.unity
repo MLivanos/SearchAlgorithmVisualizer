@@ -434,11 +434,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42dcfcbb253924925b3ee38a11816c88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shape: {x: 11, y: 11}
+  shape: {x: 31, y: 31}
   terrainPrefabs:
   - {fileID: 2208863371363518363, guid: 3a38299e02a6246d9a97b00ab086f81c, type: 3}
   - {fileID: 2089337045168712266, guid: daf6ce9ef5f1b4fce978925040e179ed, type: 3}
   cameraObject: {fileID: 330585543}
+  mazeInitializationTime: 0
 --- !u!4 &1844265701
 Transform:
   m_ObjectHideFlags: 0
