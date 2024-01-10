@@ -35,7 +35,7 @@ public abstract class TerrainGenerator : MonoBehaviour
     private void ChangePlaceColor(GameObject placeObject, Color color)
     {
         Renderer objectRenderer = placeObject.GetComponent<Renderer>();
-        objectRenderer.material.SetColor("_Color", color);
+        objectRenderer.material.SetColor("_BaseColor", color);
     }
 
     private IEnumerator GenerateMap()
