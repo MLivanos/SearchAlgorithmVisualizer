@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbb49864d81ad48489b3a8ede5e423de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shape: {x: 31, y: 31}
+  shape: {x: 51, y: 31}
   startPoint: {x: 5, y: 5}
   goalPoint: {x: 25, y: 25}
   terrainPrefabs:

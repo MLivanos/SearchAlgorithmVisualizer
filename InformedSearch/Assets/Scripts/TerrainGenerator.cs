@@ -93,9 +93,9 @@ public abstract class TerrainGenerator : MonoBehaviour
         isCreated = true;
     }
 
-    protected void PositionCamera(float offset=1.0f)
+    protected void PositionCamera(float offset=1.1f)
     {
-        cameraObject.transform.position = new Vector3(shape.x*cellSize / 2, Mathf.Max(shape.x*cellSize, shape.y*cellSize)*offset, shape.y*cellSize / 2);
+        cameraObject.transform.position = new Vector3(shape.x*cellSize / 2, Mathf.Min(shape.x*cellSize, shape.y*cellSize)*offset, shape.y*cellSize / 2 - 1);
     }
 
     protected void AddOutline()
