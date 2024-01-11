@@ -78,4 +78,9 @@ public class GameManager : MonoBehaviour
         }
         solver.SetWaitTime(minSpeed * (1.0f-speed));
     }
+
+    public void Refresh()
+    {
+        ChangeMaze(terrainIndex);
+    }
 }

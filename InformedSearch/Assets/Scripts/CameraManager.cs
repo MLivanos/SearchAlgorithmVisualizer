@@ -8,12 +8,22 @@ public class CameraManager : MonoBehaviour
 
     public void ZoomIn()
     {
-        transform.Translate(new Vector3(0, 0, zoomBy));
+        transform.Translate(new Vector3(0, -zoomBy, 0), Space.World);
     }
 
     public void ZoomOut()
     {
-        transform.Translate(new Vector3(0, 0, -zoomBy));
+        transform.Translate(new Vector3(0, zoomBy, 0), Space.World);
+    }
+
+    public void PanLeft()
+    {
+        transform.Translate(new Vector3(-zoomBy, 0, 0), Space.World);
+    }
+
+    public void PanRight()
+    {
+        transform.Translate(new Vector3(zoomBy, 0, 0), Space.World);
     }
 
 }
