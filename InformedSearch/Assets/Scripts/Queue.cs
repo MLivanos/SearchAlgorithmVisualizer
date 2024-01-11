@@ -109,4 +109,9 @@ public abstract class Queue : MonoBehaviour
         Debug.Log("============");
     }
 
+    public void EmptyFrontier()
+    {
+        frontier = new List<Vector2Int>();
+    }
+
 }
