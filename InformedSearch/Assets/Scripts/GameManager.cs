@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     private Queue frontier;
     private TerrainGenerator terrain;
     private Solver solver;
+    private float minSpeed = 0.3f;
     private bool isSolving;
 
     private void Start()
@@ -45,41 +46,6 @@ public class GameManager : MonoBehaviour
         solver.SetWaitTime(timeBetweenExpansion);
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown("0"))
-        {
-            ChangeAlgorithm(0);
-        }
-        if (Input.GetKeyDown("1"))
-        {
-            ChangeAlgorithm(1);
-        }
-        if (Input.GetKeyDown("2"))
-        {
-            ChangeAlgorithm(2);
-        }
-        if (Input.GetKeyDown("3"))
-        {
-            ChangeAlgorithm(3);
-        }
-        if (Input.GetKeyDown("m"))
-        {
-            ChangeMaze(1-terrainIndex);
-        }
-        if (Input.GetKeyDown("r"))
-        {
-            isSolving = false;
-            solver.Initialize();
-            terrain.ResetMaze();
-        }
-        if (Input.GetKeyDown("s") && terrain.IsCreated() && !isSolving)
-        {
-            isSolving = true;
-            StartCoroutine(solver.Solve());
-        }
-    }
-
     public void ChangeAlgorithm(int index)
     {
         frontierIndex = index;
@@ -91,5 +57,27 @@ public class GameManager : MonoBehaviour
         terrainIndex = index;
         InstantiateTerrain();
         InitializeFrontier();
+    }
+
+    public void StartSimulation()
+    {
+        isSolving = true;
+        StartCoroutine(solver.Solve());
+    }
+
+    public void ClearPath()
+    {
+        isSolving = false;
+        solver.Initialize();
+        terrain.ResetMaze();
+    }
+
+    public void ChangeSimulationSpeed(float speed)
+    {
+        if(!solver)
+        {
+            return;
+        }
+        solver.SetWaitTime(minSpeed * (1.0f-speed));
     }
 }
