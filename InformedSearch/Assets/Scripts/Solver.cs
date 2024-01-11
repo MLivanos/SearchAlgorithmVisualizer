@@ -6,6 +6,7 @@ public class Solver : MonoBehaviour
 {
     private Color exploredColor = new Color32(0xDD, 0x44, 0x70, 0xFF);
     private Color pathColor = new Color32(0xFF, 0xC8, 0x72, 0xFF);
+    private Coroutine lastRoutine = null;
     private float timeBetweenExpansion;
     private Queue queue;
     private TerrainGenerator terrain;
@@ -18,10 +19,19 @@ public class Solver : MonoBehaviour
 
     public void Initialize()
     {
+        if (lastRoutine != null)
+        {
+            StopCoroutine(lastRoutine);
+        }
         explored = new HashSet<Vector2Int>();
     }
 
-    public IEnumerator Solve()
+    public void Solve()
+    {
+        lastRoutine = StartCoroutine(SolveMaze());
+    }
+
+    public IEnumerator SolveMaze()
     {
         queue.EmptyFrontier();
         queue.Add(terrain.GetStart());
