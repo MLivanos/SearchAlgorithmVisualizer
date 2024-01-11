@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Solver : MonoBehaviour
 {
-    private Color exploredColor = Color.yellow;
-    private Color pathColor = Color.green;
+    private Color exploredColor = new Color32(0xDD, 0x44, 0x70, 0xFF);
+    private Color pathColor = new Color32(0xFF, 0xC8, 0x72, 0xFF);
     private float timeBetweenExpansion;
     private Queue queue;
     private TerrainGenerator terrain;

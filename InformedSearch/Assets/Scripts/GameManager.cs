@@ -69,14 +69,11 @@ public class GameManager : MonoBehaviour
         }
         if (Input.GetKeyDown("r"))
         {
-            isSolving = false;
-            solver.Initialize();
-            terrain.ResetMaze();
+            ClearPath();
         }
         if (Input.GetKeyDown("s") && terrain.IsCreated() && !isSolving)
         {
-            isSolving = true;
-            StartCoroutine(solver.Solve());
+            StartSimulation();
         }
     }
 
@@ -91,5 +88,27 @@ public class GameManager : MonoBehaviour
         terrainIndex = index;
         InstantiateTerrain();
         InitializeFrontier();
+    }
+
+    public void StartSimulation()
+    {
+        isSolving = true;
+        StartCoroutine(solver.Solve());
+    }
+
+    public void ClearPath()
+    {
+        isSolving = false;
+        solver.Initialize();
+        terrain.ResetMaze();
+    }
+
+    public void ChangeSimulationSpeed(float speed)
+    {
+        if(!solver)
+        {
+            return;
+        }
+        solver.SetWaitTime(1.0f-speed);
     }
 }
