@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     private Queue frontier;
     private TerrainGenerator terrain;
     private Solver solver;
+    private float minSpeed = 0.3f;
     private bool isSolving;
 
     private void Start()
@@ -109,6 +110,6 @@ public class GameManager : MonoBehaviour
         {
             return;
         }
-        solver.SetWaitTime(1.0f-speed);
+        solver.SetWaitTime(minSpeed * (1.0f-speed));
     }
 }
