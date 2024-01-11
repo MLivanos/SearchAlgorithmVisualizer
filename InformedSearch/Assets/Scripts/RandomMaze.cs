@@ -31,4 +31,9 @@ public class RandomMaze : TerrainGenerator
     {
         proportionOfBlockedPoints = proportion;
     }
+
+    public void SetProportion(float proportion)
+    {
+        proportionOfBlockedPoints = proportion;
+    }
 }

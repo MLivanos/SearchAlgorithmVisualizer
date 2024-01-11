@@ -14,11 +14,26 @@ public class GameManager : MonoBehaviour
     private Solver solver;
     private float minSpeed = 0.3f;
     private bool isSolving;
+    private int randomMazeIndex;
 
     private void Start()
     {
+        FindRandomMaze();
         InstantiateTerrain();
         InitializeFrontier();
+    }
+
+    private void FindRandomMaze()
+    {
+        for(int i=0; i < terrainPrefabs.Length; i++)
+        {
+            GameObject prefab = terrainPrefabs[i];
+            if (prefab.GetComponent<RandomMaze>())
+            {
+                randomMazeIndex = i;
+                return;
+            }
+        }
     }
 
     private void InstantiateTerrain()
@@ -82,5 +97,10 @@ public class GameManager : MonoBehaviour
     public void Refresh()
     {
         ChangeMaze(terrainIndex);
+    }
+
+    public void ChangeObstacleProportion(float proportion)
+    {
+        terrainPrefabs[randomMazeIndex].GetComponent<RandomMaze>().SetProportion(proportion);
     }
 }
