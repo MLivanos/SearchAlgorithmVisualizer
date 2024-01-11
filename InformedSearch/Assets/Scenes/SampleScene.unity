@@ -152,10 +152,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52708cdd0c2b241d98c4b9fdcf6e6d03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  terrainPrefab: {fileID: 6511688752733494903, guid: 2ee6c0eb675f54458bb90349ec546bc2,
-    type: 3}
-  queue: {fileID: 7521175067056747292, guid: f0e072b02030649ec90f99057e2c6015, type: 3}
+  terrainPrefabs:
+  - {fileID: 6511688752733494903, guid: 77450e4cf13954abca74f4ef068b4f05, type: 3}
+  - {fileID: 6511688752733494903, guid: 2ee6c0eb675f54458bb90349ec546bc2, type: 3}
+  frontierPrefabs:
+  - {fileID: 3077587513844444369, guid: 53cf1dc27d9bb4e139a40a63bd79507f, type: 3}
+  - {fileID: 9009136432685953655, guid: dd4098ebb515143d9af93e1fad225a5e, type: 3}
+  - {fileID: 369633350109626105, guid: f0e072b02030649ec90f99057e2c6015, type: 3}
+  - {fileID: 869358677723514714, guid: 25a289ebd1c2049efa798f1eeba45852, type: 3}
   timeBetweenExpansion: 0.02
+  terrainIndex: 0
+  frontierIndex: 0
 --- !u!4 &88686927
 Transform:
   m_ObjectHideFlags: 0

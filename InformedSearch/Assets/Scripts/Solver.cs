@@ -13,11 +13,17 @@ public class Solver : MonoBehaviour
 
     private void Start()
     {
+        Initialize();
+    }
+
+    public void Initialize()
+    {
         explored = new HashSet<Vector2Int>();
     }
 
     public IEnumerator Solve()
     {
+        queue.EmptyFrontier();
         queue.Add(terrain.GetStart());
         while (!queue.IsEmpty())
         {
