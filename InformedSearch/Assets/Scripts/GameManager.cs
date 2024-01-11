@@ -46,38 +46,6 @@ public class GameManager : MonoBehaviour
         solver.SetWaitTime(timeBetweenExpansion);
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown("0"))
-        {
-            ChangeAlgorithm(0);
-        }
-        if (Input.GetKeyDown("1"))
-        {
-            ChangeAlgorithm(1);
-        }
-        if (Input.GetKeyDown("2"))
-        {
-            ChangeAlgorithm(2);
-        }
-        if (Input.GetKeyDown("3"))
-        {
-            ChangeAlgorithm(3);
-        }
-        if (Input.GetKeyDown("m"))
-        {
-            ChangeMaze(1-terrainIndex);
-        }
-        if (Input.GetKeyDown("r"))
-        {
-            ClearPath();
-        }
-        if (Input.GetKeyDown("s") && terrain.IsCreated() && !isSolving)
-        {
-            StartSimulation();
-        }
-    }
-
     public void ChangeAlgorithm(int index)
     {
         frontierIndex = index;
