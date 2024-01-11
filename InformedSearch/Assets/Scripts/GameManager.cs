@@ -16,9 +16,18 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        InstantiateTerrain();
+        InitializeFrontier();
+    }
+
+    private void InstantiateTerrain()
+    {
+        if (terrain)
+        {
+            terrain.DestroyMaze();
+        }
         GameObject terrainObject = Instantiate(terrainPrefabs[terrainIndex]);
         terrain = terrainObject.GetComponent<TerrainGenerator>();
-        InitializeFrontier();
     }
 
     private void InitializeFrontier()
@@ -54,6 +63,10 @@ public class GameManager : MonoBehaviour
         {
             ChangeAlgorithm(3);
         }
+        if (Input.GetKeyDown("m"))
+        {
+            ChangeMaze(1-terrainIndex);
+        }
         if (Input.GetKeyDown("r"))
         {
             isSolving = false;
@@ -70,6 +83,13 @@ public class GameManager : MonoBehaviour
     public void ChangeAlgorithm(int index)
     {
         frontierIndex = index;
+        InitializeFrontier();
+    }
+
+    public void ChangeMaze(int index)
+    {
+        terrainIndex = index;
+        InstantiateTerrain();
         InitializeFrontier();
     }
 }

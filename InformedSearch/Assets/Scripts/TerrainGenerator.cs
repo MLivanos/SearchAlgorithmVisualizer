@@ -214,4 +214,16 @@ public abstract class TerrainGenerator : MonoBehaviour
         StartCoroutine(ChangePlaceColor(startPoint, Color.red, 0.0f));
         StartCoroutine(ChangePlaceColor(goalPoint, Color.blue, 0.0f));
     }
+
+    public void DestroyMaze()
+    {
+        for(int i=0; i<shape.x; i++)
+        {
+            for(int j=0; j<shape.y; j++)
+            {
+                Destroy(terrainObjects[i,j]);
+            }
+        }
+        Destroy(gameObject);
+    }
 }
