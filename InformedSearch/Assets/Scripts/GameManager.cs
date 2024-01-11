@@ -61,13 +61,11 @@ public class GameManager : MonoBehaviour
 
     public void StartSimulation()
     {
-        isSolving = true;
-        StartCoroutine(solver.Solve());
+        solver.Solve();
     }
 
     public void ClearPath()
     {
-        isSolving = false;
         solver.Initialize();
         terrain.ResetMaze();
     }
