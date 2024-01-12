@@ -42,6 +42,18 @@ public class GameManager : MonoBehaviour
                 int xPosition = (int)raycastHit.transform.position.x;
                 int zPosition = (int)raycastHit.transform.position.z;
                 Vector2Int clickedPosition = new Vector2Int(xPosition, zPosition);
+                if (Input.GetMouseButtonDown(0) && Input.GetKey("s") && clickedPosition != terrain.GetGoal() && terrain.GetTile(clickedPosition) == 0.0f)
+                {
+                    terrain.SetStartPosition(clickedPosition);
+                    ClearPath();
+                    return;
+                }
+                if (Input.GetMouseButtonDown(0) && Input.GetKey("g")&& clickedPosition != terrain.GetStart() && terrain.GetTile(clickedPosition) == 0.0f)
+                {
+                    terrain.SetGoalPosition(clickedPosition);
+                    ClearPath();
+                    return;
+                }
                 if (hasClicked.Contains(clickedPosition))
                 {
                     return;

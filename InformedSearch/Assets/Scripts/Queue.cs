@@ -88,7 +88,7 @@ public abstract class Queue : MonoBehaviour
     public List<Vector2Int> Backtrack()
     {
         List<Vector2Int> pathway = new List<Vector2Int>();
-        Vector2Int currentPoint = goalPosition;
+        Vector2Int currentPoint = terrain.GetGoal();
         while (currentPoint != terrain.GetStart())
         {
             pathway.Add(currentPoint);

@@ -119,7 +119,7 @@ public abstract class TerrainGenerator : MonoBehaviour
 
     public void SwapTile(Vector2Int position)
     {
-        if (position.x >= shape.x - 1 || position.y >= shape.y - 1 || position.x * position.y <= 0)
+        if (IsRegularTile(position))
         {
             return;
         }
@@ -128,6 +128,16 @@ public abstract class TerrainGenerator : MonoBehaviour
         newTile.transform.position = terrainObjects[position.x, position.y].transform.position;
         Destroy(terrainObjects[position.x, position.y]);
         terrainObjects[position.x, position.y] = newTile;
+    }
+
+    private bool IsRegularTile(Vector2Int position)
+    {
+        return IsInBounds(position) || position == GetStart() || position == GetGoal();
+    }
+
+    private bool IsInBounds(Vector2Int position)
+    {
+        return position.x >= shape.x - 1 || position.y >= shape.y - 1 || position.x * position.y <= 0;
     }
 
     public int GetCost(Vector2Int position1, Vector2Int position2)
@@ -179,11 +189,19 @@ public abstract class TerrainGenerator : MonoBehaviour
 
     public void SetStartPosition(Vector2Int position)
     {
+        if (IsRegularTile(position))
+        {
+            return;
+        }
         startPoint = position;
     }
 
     public void SetGoalPosition(Vector2Int position)
     {
+        if (IsRegularTile(position))
+        {
+            return;
+        }
         goalPoint = position;
     }
 
