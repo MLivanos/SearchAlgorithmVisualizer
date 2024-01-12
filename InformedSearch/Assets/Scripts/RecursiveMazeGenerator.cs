@@ -4,15 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RecursiveMazeGenerator : TerrainGenerator
-{   
-    private void Start()
-    {
-        Initialize();
-    }
+{
 
-    protected override void Initialize()
+    public override void Initialize(Vector2Int mazeShape)
     {
-        base.Initialize();
+        base.Initialize(mazeShape);
         MakeMaze();
     }
 

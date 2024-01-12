@@ -22,8 +22,9 @@ public abstract class TerrainGenerator : MonoBehaviour
     protected int blockedValue = 1;
     protected bool isCreated;
 
-    protected virtual void Initialize()
+    public virtual void Initialize(Vector2Int mazeShape)
     {
+        shape = mazeShape;
         Renderer tileRenderer = terrainPrefabs[freeValue].GetComponent<Renderer>();
         freeSpaceColor = tileRenderer.sharedMaterial.color;
         terrain = new int[shape.x,shape.y];

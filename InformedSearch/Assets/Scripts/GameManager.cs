@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject[] frontierPrefabs;
     [SerializeField] private TMP_Text nodesExploredDisplay;
     [SerializeField] private TMP_Text pathCostDisplay;
+    [SerializeField] private TMP_InputField mazeShapeX;
+    [SerializeField] private TMP_InputField mazeShapeZ;
     [SerializeField] private float timeBetweenExpansion;
     [SerializeField] private int terrainIndex;
     [SerializeField] private int frontierIndex;
@@ -95,6 +97,7 @@ public class GameManager : MonoBehaviour
         }
         GameObject terrainObject = Instantiate(terrainPrefabs[terrainIndex]);
         terrain = terrainObject.GetComponent<TerrainGenerator>();
+        terrain.Initialize(GetMazeShape());
     }
 
     private void InitializeFrontier()
@@ -171,5 +174,30 @@ public class GameManager : MonoBehaviour
     {
         AStarWeight = maxAStarWeight * weight;
         InitializeFrontier();
+    }
+
+    private Vector2Int GetMazeShape()
+    {
+        int xShape;
+        int zShape;
+        bool validX = int.TryParse(mazeShapeX.text, out xShape);
+        bool validZ = int.TryParse(mazeShapeZ.text, out zShape);
+        if (!validX || xShape < 5)
+        {
+            xShape = 71;
+        }
+        if (!validZ || xShape < 5)
+        {
+            zShape = 31;
+        }
+        if (xShape % 2 == 0)
+        {
+            xShape += 1;
+        }
+        if (zShape % 2 == 0)
+        {
+            zShape += 1;
+        }
+        return new Vector2Int(xShape, zShape);
     }
 }
