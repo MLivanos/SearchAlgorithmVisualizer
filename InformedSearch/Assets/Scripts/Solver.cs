@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Solver : MonoBehaviour
 {
@@ -11,6 +12,10 @@ public class Solver : MonoBehaviour
     private Queue queue;
     private TerrainGenerator terrain;
     private HashSet<Vector2Int> explored;
+    private TMP_Text nodesExploredDisplay;
+    private TMP_Text pathCostDisplay;
+    public int pathCost;
+
 
     private void Start()
     {
@@ -24,6 +29,7 @@ public class Solver : MonoBehaviour
             StopCoroutine(lastRoutine);
         }
         explored = new HashSet<Vector2Int>();
+        ChangeDisplay();
     }
 
     public void Solve()
@@ -51,12 +57,15 @@ public class Solver : MonoBehaviour
             }
             yield return new WaitForSeconds(timeBetweenExpansion);
         }
+        ChangeDisplay();
     }
 
     public void HighlightPath(List<Vector2Int> path)
     {
+        pathCost = 0;
         foreach(Vector2Int point in path)
         {
+            pathCost += 1;
             terrain.ExploreNode(point, pathColor);
         }
     }
@@ -87,5 +96,27 @@ public class Solver : MonoBehaviour
     public void SetWaitTime(float time)
     {
         timeBetweenExpansion = time;
+    }
+
+    public float GetPathCost()
+    {
+        return pathCost;
+    }
+
+    public int GetNodesExplored()
+    {
+        return explored.Count;
+    }
+
+    public void SetText(TMP_Text nodesExploredText, TMP_Text pathCostText)
+    {
+        nodesExploredDisplay = nodesExploredText;
+        pathCostDisplay = pathCostText;
+    }
+
+    private void ChangeDisplay()
+    {
+        nodesExploredDisplay.text = GetNodesExplored().ToString();
+        pathCostDisplay.text = pathCost.ToString();
     }
 }

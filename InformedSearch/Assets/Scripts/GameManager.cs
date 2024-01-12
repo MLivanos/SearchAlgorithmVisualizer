@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject[] terrainPrefabs;
     [SerializeField] private GameObject[] frontierPrefabs;
+    [SerializeField] private TMP_Text nodesExploredDisplay;
+    [SerializeField] private TMP_Text pathCostDisplay;
     [SerializeField] private float timeBetweenExpansion;
     [SerializeField] private int terrainIndex;
     [SerializeField] private int frontierIndex;
@@ -108,6 +111,7 @@ public class GameManager : MonoBehaviour
             (frontier as AStarQueue).SetHueristicWeight(AStarWeight);
         }
         solver = gameObject.AddComponent(typeof(Solver)) as Solver;
+        solver.SetText(nodesExploredDisplay, pathCostDisplay);
         solver.SetTerrain(terrain);
         solver.SetQueue(frontier);
         frontier.Initialize();
