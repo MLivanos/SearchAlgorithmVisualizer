@@ -4,7 +4,9 @@
 
 <img width="767" alt="Screenshot 2024-01-12 at 10 27 12 AM" src="https://github.com/MLivanos/SearchAlgorithmVisualizer/assets/59032623/8729b0a0-78cb-4a6c-976b-12999efe6c62">
 
-![StaticBadge](https://img.shields.io/badge/PLAY-100000?style=for-the-badge&logo=unity&logoColor=white&link=mlivanos.github.io/SearchAlgorithmVisualizer)
+<br>
+
+<p><a href="https://mlivanos.github.io/SearchAlgorithmVisualizer"><img alt="Static Badge" src="https://img.shields.io/badge/PLAY-black?style=for-the-badge&logo=unity&logoColor=white&labelColor=black&color=black&link=mlivanos.github.io%2FSearchAlgorithmVisualizer%2F" style="width:225px;"/></a></p>
 
 </div>
 
