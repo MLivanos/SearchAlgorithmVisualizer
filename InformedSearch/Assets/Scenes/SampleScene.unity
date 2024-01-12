@@ -231,6 +231,7 @@ MonoBehaviour:
   terrainPrefabs:
   - {fileID: 6511688752733494903, guid: 77450e4cf13954abca74f4ef068b4f05, type: 3}
   - {fileID: 6511688752733494903, guid: 2ee6c0eb675f54458bb90349ec546bc2, type: 3}
+  - {fileID: 4329532440314205642, guid: 06e3d07c967c747579a563f403b42879, type: 3}
   frontierPrefabs:
   - {fileID: 3077587513844444369, guid: 53cf1dc27d9bb4e139a40a63bd79507f, type: 3}
   - {fileID: 9009136432685953655, guid: dd4098ebb515143d9af93e1fad225a5e, type: 3}
@@ -3711,6 +3712,8 @@ MonoBehaviour:
     - m_Text: Recursive
       m_Image: {fileID: 0}
     - m_Text: Random
+      m_Image: {fileID: 0}
+    - m_Text: Blank
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:

@@ -137,6 +137,7 @@ public class GameManager : MonoBehaviour
 
     public void StartSimulation()
     {
+        ClearPath();
         solver.Solve();
     }
 
