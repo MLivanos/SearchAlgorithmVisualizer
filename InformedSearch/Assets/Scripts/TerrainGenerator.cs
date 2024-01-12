@@ -11,6 +11,8 @@ public abstract class TerrainGenerator : MonoBehaviour
     [SerializeField] protected GameObject[] terrainPrefabs;
     [SerializeField] protected float mazeInitializationTime;
     [SerializeField] protected float itemFlipTime;
+    protected Color startColor = new Color32(0x4E, 0x4D, 0x8D, 0xFF);
+    protected Color goalColor = new Color32(0x84, 0xD8, 0x8B, 0xFF);
     protected GameObject[,] terrainObjects;
     protected Color freeSpaceColor;
     protected int[,] terrain;
@@ -88,8 +90,8 @@ public abstract class TerrainGenerator : MonoBehaviour
             }
             yield return new WaitForSeconds(timeBetweenBlocks);
         }
-        StartCoroutine(ChangePlaceColor(new Vector2Int(startPoint.x, startPoint.y), Color.red, 0.0f));
-        StartCoroutine(ChangePlaceColor(new Vector2Int(goalPoint.x, goalPoint.y), Color.blue, 0.0f));
+        StartCoroutine(ChangePlaceColor(new Vector2Int(startPoint.x, startPoint.y), startColor, 0.0f));
+        StartCoroutine(ChangePlaceColor(new Vector2Int(goalPoint.x, goalPoint.y), goalColor, 0.0f));
         isCreated = true;
     }
 
@@ -242,8 +244,8 @@ public abstract class TerrainGenerator : MonoBehaviour
                 }
             }
         }
-        StartCoroutine(ChangePlaceColor(startPoint, Color.red, 0.0f));
-        StartCoroutine(ChangePlaceColor(goalPoint, Color.blue, 0.0f));
+        StartCoroutine(ChangePlaceColor(startPoint, startColor, 0.0f));
+        StartCoroutine(ChangePlaceColor(goalPoint, goalColor, 0.0f));
     }
 
     public void DestroyMaze()

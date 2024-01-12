@@ -10,11 +10,12 @@ public class AStarQueue : Queue
     private Dictionary<Vector2Int, float> finalCost = new Dictionary<Vector2Int, float>();
     private heuristicFunction[] heuristics = new heuristicFunction[4];
     private int hueristicIndex;
+    private float hueristicWeight = 1.0f;
 
     public override void Add(Vector2Int position)
     {
         objectiveCost[position] = objectiveCost[previous[position]] + terrain.GetCost(position, previous[position]);
-        finalCost[position] = objectiveCost[position] + Hueristic(position);
+        finalCost[position] = objectiveCost[position] + hueristicWeight*Hueristic(position);
         InsertionSort(position, finalCost[position], finalCost);
     }
 
@@ -57,5 +58,10 @@ public class AStarQueue : Queue
     public void SetHueristicIndex(int index)
     {
         hueristicIndex = index;
+    }
+
+    public void SetHueristicWeight(float weight)
+    {
+        hueristicWeight = weight;
     }
 }

@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
     private bool isPlacingGoal;
     private int randomMazeIndex;
     private int heuristicIndex;
+    private float AStarWeight = 1.0f;
+    private float maxAStarWeight = 2.0f;
 
     private void Start()
     {
@@ -103,6 +105,7 @@ public class GameManager : MonoBehaviour
         if (frontier is AStarQueue && !(frontier is DjikstrasQueue))
         {
             (frontier as AStarQueue).SetHueristicIndex(heuristicIndex);
+            (frontier as AStarQueue).SetHueristicWeight(AStarWeight);
         }
         solver = gameObject.AddComponent(typeof(Solver)) as Solver;
         solver.SetTerrain(terrain);
@@ -157,6 +160,12 @@ public class GameManager : MonoBehaviour
     public void SetAStarHueristic(int index)
     {
         heuristicIndex = index;
+        InitializeFrontier();
+    }
+
+    public void SetAStarWeight(float weight)
+    {
+        AStarWeight = maxAStarWeight * weight;
         InitializeFrontier();
     }
 }
