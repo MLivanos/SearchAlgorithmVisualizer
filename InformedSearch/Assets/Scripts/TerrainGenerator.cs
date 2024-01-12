@@ -119,7 +119,7 @@ public abstract class TerrainGenerator : MonoBehaviour
 
     public void SwapTile(Vector2Int position)
     {
-        if (position.x >= shape.x - 1 || position.y >= shape.y - 1)
+        if (position.x >= shape.x - 1 || position.y >= shape.y - 1 || position.x * position.y <= 0)
         {
             return;
         }

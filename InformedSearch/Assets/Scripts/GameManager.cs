@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float timeBetweenExpansion;
     [SerializeField] private int terrainIndex;
     [SerializeField] private int frontierIndex;
+    private HashSet<Vector2> hasClicked = new HashSet<Vector2>();
     private Queue frontier;
     private TerrainGenerator terrain;
     private Solver solver;
@@ -32,7 +33,7 @@ public class GameManager : MonoBehaviour
 
     private void CheckForClicks()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
         {
             RaycastHit raycastHit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -40,12 +41,18 @@ public class GameManager : MonoBehaviour
             {
                 int xPosition = (int)raycastHit.transform.position.x;
                 int zPosition = (int)raycastHit.transform.position.z;
-                if (xPosition * zPosition == 0)
+                Vector2Int clickedPosition = new Vector2Int(xPosition, zPosition);
+                if (hasClicked.Contains(clickedPosition))
                 {
                     return;
                 }
-                terrain.SwapTile(new Vector2Int(xPosition, zPosition));
+                hasClicked.Add(clickedPosition);
+                terrain.SwapTile(clickedPosition);
             }
+        }
+        else
+        {
+            hasClicked = new HashSet<Vector2>();
         }
     }
 
