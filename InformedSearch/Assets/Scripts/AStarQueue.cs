@@ -42,7 +42,7 @@ public class AStarQueue : Queue
 
     protected float ChebychevDistance(Vector2Int position)
     {
-        return Mathf.Min(Mathf.Abs(position.x - goalPosition.x), Mathf.Abs(position.y - goalPosition.y));
+        return Mathf.Max(Mathf.Abs(position.x - goalPosition.x), Mathf.Abs(position.y - goalPosition.y));
     }
 
     protected float EuclideanDistance(Vector2Int position)
