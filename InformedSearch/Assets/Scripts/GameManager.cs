@@ -25,7 +25,6 @@ public class GameManager : MonoBehaviour
     private int randomMazeIndex;
     private int heuristicIndex;
     private float AStarWeight = 1.0f;
-    private float maxAStarWeight = 2.0f;
 
     private void Start()
     {
@@ -174,7 +173,7 @@ public class GameManager : MonoBehaviour
 
     public void SetAStarWeight(float weight)
     {
-        AStarWeight = maxAStarWeight * weight;
+        AStarWeight = weight;
         InitializeFrontier();
     }
 

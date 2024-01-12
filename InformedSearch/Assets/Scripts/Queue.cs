@@ -11,7 +11,7 @@ public abstract class Queue : MonoBehaviour
 
     private void Start()
     {
-        frontier = new List<Vector2Int>();
+        Initialize();
     }
 
     public virtual void Add(Vector2Int position)
@@ -21,6 +21,7 @@ public abstract class Queue : MonoBehaviour
 
     public virtual void Initialize()
     {
+        goalPosition = terrain.GetGoal();
         frontier = new List<Vector2Int>();
     }
 
