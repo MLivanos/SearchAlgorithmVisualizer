@@ -117,6 +117,19 @@ public abstract class TerrainGenerator : MonoBehaviour
         return terrain[position.x, position.y];
     }
 
+    public void SwapTile(Vector2Int position)
+    {
+        if (position.x >= shape.x - 1 || position.y >= shape.y - 1)
+        {
+            return;
+        }
+        terrain[position.x, position.y] = 1 - terrain[position.x, position.y];
+        GameObject newTile = Instantiate(terrainPrefabs[terrain[position.x, position.y]]);
+        newTile.transform.position = terrainObjects[position.x, position.y].transform.position;
+        Destroy(terrainObjects[position.x, position.y]);
+        terrainObjects[position.x, position.y] = newTile;
+    }
+
     public int GetCost(Vector2Int position1, Vector2Int position2)
     {
         if (Mathf.Abs((position2 - position1).magnitude) > 1.1f)

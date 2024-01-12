@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     private Solver solver;
     private float minSpeed = 0.3f;
     private bool isSolving;
+    private bool isPlacingStart;
+    private bool isPlacingGoal;
     private int randomMazeIndex;
 
     private void Start()
@@ -21,6 +23,30 @@ public class GameManager : MonoBehaviour
         FindRandomMaze();
         InstantiateTerrain();
         InitializeFrontier();
+    }
+
+    private void Update()
+    {
+        CheckForClicks();
+    }
+
+    private void CheckForClicks()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            RaycastHit raycastHit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out raycastHit, Camera.main.transform.position.y * Camera.main.transform.position.y))
+            {
+                int xPosition = (int)raycastHit.transform.position.x;
+                int zPosition = (int)raycastHit.transform.position.z;
+                if (xPosition * zPosition == 0)
+                {
+                    return;
+                }
+                terrain.SwapTile(new Vector2Int(xPosition, zPosition));
+            }
+        }
     }
 
     private void FindRandomMaze()
