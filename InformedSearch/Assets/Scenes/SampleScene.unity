@@ -5994,7 +5994,7 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: DFS
       m_Image: {fileID: 0}
-    - m_Text: Djikstra
+    - m_Text: Dijkstra
       m_Image: {fileID: 0}
     - m_Text: A*
       m_Image: {fileID: 0}
