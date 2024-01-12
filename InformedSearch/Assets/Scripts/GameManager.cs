@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     private bool isPlacingStart;
     private bool isPlacingGoal;
     private int randomMazeIndex;
+    private int heuristicIndex;
 
     private void Start()
     {
@@ -99,6 +100,10 @@ public class GameManager : MonoBehaviour
         {
             Destroy(GetComponent<Solver>());
         }
+        if (frontier is AStarQueue && !(frontier is DjikstrasQueue))
+        {
+            (frontier as AStarQueue).SetHueristicIndex(heuristicIndex);
+        }
         solver = gameObject.AddComponent(typeof(Solver)) as Solver;
         solver.SetTerrain(terrain);
         solver.SetQueue(frontier);
@@ -147,5 +152,11 @@ public class GameManager : MonoBehaviour
     public void ChangeObstacleProportion(float proportion)
     {
         terrainPrefabs[randomMazeIndex].GetComponent<RandomMaze>().SetProportion(proportion);
+    }
+
+    public void SetAStarHueristic(int index)
+    {
+        heuristicIndex = index;
+        InitializeFrontier();
     }
 }
