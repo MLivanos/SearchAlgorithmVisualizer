@@ -11,6 +11,8 @@ public abstract class TerrainGenerator : MonoBehaviour
     [SerializeField] protected GameObject[] terrainPrefabs;
     [SerializeField] protected float mazeInitializationTime;
     [SerializeField] protected float itemFlipTime;
+    protected Color startColor = new Color32(0x4E, 0x4D, 0x8D, 0xFF);
+    protected Color goalColor = new Color32(0x84, 0xD8, 0x8B, 0xFF);
     protected GameObject[,] terrainObjects;
     protected Color freeSpaceColor;
     protected int[,] terrain;
@@ -20,8 +22,9 @@ public abstract class TerrainGenerator : MonoBehaviour
     protected int blockedValue = 1;
     protected bool isCreated;
 
-    protected virtual void Initialize()
+    public virtual void Initialize(Vector2Int mazeShape)
     {
+        shape = mazeShape;
         Renderer tileRenderer = terrainPrefabs[freeValue].GetComponent<Renderer>();
         freeSpaceColor = tileRenderer.sharedMaterial.color;
         terrain = new int[shape.x,shape.y];
@@ -33,8 +36,6 @@ public abstract class TerrainGenerator : MonoBehaviour
 
     protected virtual void MakeMaze()
     {
-        terrain[startPoint.x, startPoint.y] = freeValue;
-        terrain[goalPoint.x, goalPoint.y] = freeValue;
         StartCoroutine(GenerateMap());
     }
 
@@ -88,8 +89,10 @@ public abstract class TerrainGenerator : MonoBehaviour
             }
             yield return new WaitForSeconds(timeBetweenBlocks);
         }
-        StartCoroutine(ChangePlaceColor(new Vector2Int(startPoint.x, startPoint.y), Color.red, 0.0f));
-        StartCoroutine(ChangePlaceColor(new Vector2Int(goalPoint.x, goalPoint.y), Color.blue, 0.0f));
+        SetStartPosition(new Vector2Int((int)(shape.x * 0.25),(int)(shape.y * 0.5)));
+        SetGoalPosition(new Vector2Int((int)(shape.x * 0.75),(int)(shape.y * 0.5)));
+        StartCoroutine(ChangePlaceColor(new Vector2Int(startPoint.x, startPoint.y), startColor, 0.0f));
+        StartCoroutine(ChangePlaceColor(new Vector2Int(goalPoint.x, goalPoint.y), goalColor, 0.0f));
         isCreated = true;
     }
 
@@ -115,6 +118,29 @@ public abstract class TerrainGenerator : MonoBehaviour
     public int GetTile(Vector2Int position)
     {
         return terrain[position.x, position.y];
+    }
+
+    public void SwapTile(Vector2Int position)
+    {
+        if (IsRegularTile(position))
+        {
+            return;
+        }
+        terrain[position.x, position.y] = 1 - terrain[position.x, position.y];
+        GameObject newTile = Instantiate(terrainPrefabs[terrain[position.x, position.y]]);
+        newTile.transform.position = terrainObjects[position.x, position.y].transform.position;
+        Destroy(terrainObjects[position.x, position.y]);
+        terrainObjects[position.x, position.y] = newTile;
+    }
+
+    private bool IsRegularTile(Vector2Int position)
+    {
+        return IsInBounds(position) || position == GetStart() || position == GetGoal();
+    }
+
+    private bool IsInBounds(Vector2Int position)
+    {
+        return position.x >= shape.x - 1 || position.y >= shape.y - 1 || position.x * position.y <= 0;
     }
 
     public int GetCost(Vector2Int position1, Vector2Int position2)
@@ -166,11 +192,27 @@ public abstract class TerrainGenerator : MonoBehaviour
 
     public void SetStartPosition(Vector2Int position)
     {
+        if (IsRegularTile(position))
+        {
+            return;
+        }
+        if (GetTile(position) == blockedValue)
+        {
+            SwapTile(position);
+        }
         startPoint = position;
     }
 
     public void SetGoalPosition(Vector2Int position)
     {
+        if (IsRegularTile(position))
+        {
+            return;
+        }
+        if (GetTile(position) == blockedValue)
+        {
+            SwapTile(position);
+        }
         goalPoint = position;
     }
 
@@ -211,8 +253,8 @@ public abstract class TerrainGenerator : MonoBehaviour
                 }
             }
         }
-        StartCoroutine(ChangePlaceColor(startPoint, Color.red, 0.0f));
-        StartCoroutine(ChangePlaceColor(goalPoint, Color.blue, 0.0f));
+        StartCoroutine(ChangePlaceColor(startPoint, startColor, 0.0f));
+        StartCoroutine(ChangePlaceColor(goalPoint, goalColor, 0.0f));
     }
 
     public void DestroyMaze()

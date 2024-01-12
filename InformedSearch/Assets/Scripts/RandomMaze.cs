@@ -6,13 +6,10 @@ using UnityEngine;
 public class RandomMaze : TerrainGenerator
 {   
     [SerializeField] private float proportionOfBlockedPoints;
-    private void Start()
+
+    public override void Initialize(Vector2Int mazeShape)
     {
-        Initialize();
-    }
-    protected override void Initialize()
-    {
-        base.Initialize();
+        base.Initialize(mazeShape);
         MakeMaze();
     }
 
@@ -28,6 +25,11 @@ public class RandomMaze : TerrainGenerator
     }
 
     public void SetBlockedProportion(float proportion)
+    {
+        proportionOfBlockedPoints = proportion;
+    }
+
+    public void SetProportion(float proportion)
     {
         proportionOfBlockedPoints = proportion;
     }
