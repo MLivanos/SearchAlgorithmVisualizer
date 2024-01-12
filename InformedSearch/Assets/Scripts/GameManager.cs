@@ -178,6 +178,16 @@ public class GameManager : MonoBehaviour
         InitializeFrontier();
     }
 
+    public void SetAStarWeight(string weightString)
+    {
+        float weight;
+        bool validWeight = float.TryParse(weightString, out weight);
+        if (validWeight)
+        {
+            SetAStarWeight(weight);
+        }
+    }
+
     private Vector2Int GetMazeShape()
     {
         int xShape;
