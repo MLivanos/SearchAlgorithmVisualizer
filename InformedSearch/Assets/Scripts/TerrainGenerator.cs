@@ -36,8 +36,6 @@ public abstract class TerrainGenerator : MonoBehaviour
 
     protected virtual void MakeMaze()
     {
-        terrain[startPoint.x, startPoint.y] = freeValue;
-        terrain[goalPoint.x, goalPoint.y] = freeValue;
         StartCoroutine(GenerateMap());
     }
 
@@ -91,6 +89,8 @@ public abstract class TerrainGenerator : MonoBehaviour
             }
             yield return new WaitForSeconds(timeBetweenBlocks);
         }
+        SetStartPosition(new Vector2Int((int)(shape.x * 0.25),(int)(shape.y * 0.5)));
+        SetGoalPosition(new Vector2Int((int)(shape.x * 0.75),(int)(shape.y * 0.5)));
         StartCoroutine(ChangePlaceColor(new Vector2Int(startPoint.x, startPoint.y), startColor, 0.0f));
         StartCoroutine(ChangePlaceColor(new Vector2Int(goalPoint.x, goalPoint.y), goalColor, 0.0f));
         isCreated = true;
@@ -196,6 +196,10 @@ public abstract class TerrainGenerator : MonoBehaviour
         {
             return;
         }
+        if (GetTile(position) == blockedValue)
+        {
+            SwapTile(position);
+        }
         startPoint = position;
     }
 
@@ -204,6 +208,10 @@ public abstract class TerrainGenerator : MonoBehaviour
         if (IsRegularTile(position))
         {
             return;
+        }
+        if (GetTile(position) == blockedValue)
+        {
+            SwapTile(position);
         }
         goalPoint = position;
     }

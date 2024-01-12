@@ -39,7 +39,7 @@ public class Solver : MonoBehaviour
 
     public IEnumerator SolveMaze()
     {
-        queue.EmptyFrontier();
+        queue.Initialize();
         queue.Add(terrain.GetStart());
         while (!queue.IsEmpty())
         {

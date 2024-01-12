@@ -97,7 +97,8 @@ public class GameManager : MonoBehaviour
         }
         GameObject terrainObject = Instantiate(terrainPrefabs[terrainIndex]);
         terrain = terrainObject.GetComponent<TerrainGenerator>();
-        terrain.Initialize(GetMazeShape());
+        Vector2Int shape = GetMazeShape();
+        terrain.Initialize(shape);
     }
 
     private void InitializeFrontier()
@@ -182,13 +183,21 @@ public class GameManager : MonoBehaviour
         int zShape;
         bool validX = int.TryParse(mazeShapeX.text, out xShape);
         bool validZ = int.TryParse(mazeShapeZ.text, out zShape);
-        if (!validX || xShape < 5)
+        if (!validX)
         {
             xShape = 71;
         }
-        if (!validZ || xShape < 5)
+        if (!validZ)
         {
             zShape = 31;
+        }
+        if (xShape < 9)
+        {
+            xShape = 9;
+        }
+        if (zShape < 9)
+        {
+            zShape = 9;
         }
         if (xShape % 2 == 0)
         {
