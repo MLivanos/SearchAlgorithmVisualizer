@@ -9,7 +9,7 @@ public class Solver : MonoBehaviour
     private Color pathColor = new Color32(0xFF, 0xC8, 0x72, 0xFF);
     private Coroutine lastRoutine = null;
     private float timeBetweenExpansion;
-    private Queue queue;
+    private Queue frontier;
     private TerrainGenerator terrain;
     private HashSet<Vector2Int> explored;
     private TMP_Text nodesExploredDisplay;
@@ -39,14 +39,14 @@ public class Solver : MonoBehaviour
 
     public IEnumerator SolveMaze()
     {
-        queue.Initialize();
-        queue.Add(terrain.GetStart());
-        while (!queue.IsEmpty())
+        frontier.Initialize();
+        frontier.Add(terrain.GetStart());
+        while (!frontier.IsEmpty())
         {
-            Vector2Int currentPosition = queue.Pop();
+            Vector2Int currentPosition = frontier.Pop();
             if (currentPosition == terrain.GetGoal())
             {
-                HighlightPath(queue.Backtrack());
+                HighlightPath(frontier.Backtrack());
                 break;
             }
             terrain.ExploreNode(currentPosition, exploredColor);
@@ -76,16 +76,16 @@ public class Solver : MonoBehaviour
         {
             return;
         }
-        queue.AddToHistory(currentPosition, neighbor);
-        queue.Add(neighbor);
+        frontier.AddToHistory(currentPosition, neighbor);
+        frontier.Add(neighbor);
         explored.Add(neighbor);
     }
 
     public void SetQueue(Queue queue_)
     {
-        queue = queue_;
-        queue.SetTerrain(terrain);
-        queue.UpdateGoalPosition(terrain.GetGoal());
+        frontier = queue_;
+        frontier.SetTerrain(terrain);
+        frontier.UpdateGoalPosition(terrain.GetGoal());
     }
 
     public void SetTerrain(TerrainGenerator terrain_)

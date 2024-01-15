@@ -16,7 +16,7 @@ public class AStarQueue : Queue
     {
         objectiveCost[position] = objectiveCost[previous[position]] + terrain.GetCost(position, previous[position]);
         finalCost[position] = objectiveCost[position] + hueristicWeight*Hueristic(position);
-        InsertionSort(position, finalCost[position], finalCost);
+        Insert(position, finalCost[position], finalCost);
     }
 
     public override void Initialize()

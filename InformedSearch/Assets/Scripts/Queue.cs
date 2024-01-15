@@ -36,7 +36,7 @@ public abstract class Queue : MonoBehaviour
         return recentItem;
     }
 
-    protected void InsertionSort(Vector2Int position, float cost, Dictionary<Vector2Int, float> positionToCost)
+    protected void Insert(Vector2Int position, float cost, Dictionary<Vector2Int, float> positionToCost)
     {
         int low = 0;
         int high = frontier.Count - 1;

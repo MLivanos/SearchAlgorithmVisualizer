@@ -9,7 +9,7 @@ public class DjikstrasQueue : Queue
     public override void Add(Vector2Int position)
     {
         objectiveCost[position] = objectiveCost[previous[position]] + terrain.GetCost(position, previous[position]);
-        InsertionSort(position, objectiveCost[position], objectiveCost);
+        Insert(position, objectiveCost[position], objectiveCost);
     }
 
     public override void Initialize()
